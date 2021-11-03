@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nucleus
+spec:
+  releaseName: nucleus
+  chart:
+    spec:
+      chart: nucleus
+      sourceRef:
+        kind: HelmRepository
+        name: nvidia
+        namespace: nucleus
+      version: "1.0.0"
+  interval: 5m0s
+  install:
+    remediation:
+      retries: 3
+  valuesFrom:
+    - kind: ConfigMap
+      name: nucleus-values
